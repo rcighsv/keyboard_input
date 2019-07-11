@@ -18,6 +18,8 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
             ("mavros/setpoint_position/local", 10);
+    ros::Publisher coord_msg_pub = nh.advertise<geometry_msgs::PoseStamped>
+            ("keyboard_input/coord_msg", 10);
 
     //the setpoint publishing rate MUST be faster than 2Hz
     ros::Rate rate(20.0);
@@ -64,8 +66,8 @@ int main(int argc, char **argv)
 
         cout << "pose.pose.position.x = " << pose.pose.position.x << endl
              << "pose.pose.position.y = " << pose.pose.position.y << endl << endl;
-        local_pos_pub.publish(pose);
-
+        //local_pos_pub.publish(pose);
+        coord_msg_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
     }
